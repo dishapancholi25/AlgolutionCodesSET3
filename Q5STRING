@@ -1,0 +1,39 @@
+#include <iostream>
+#include <stack>
+#include <string>
+using namespace std;
+
+bool isValid(const string& s) {
+    stack<char> stk;
+
+    for (char ch : s) {
+        if (ch == '(' || ch == '{' || ch == '[') {
+            stk.push(ch); // Push open brackets onto the stack
+        } else {
+            if (stk.empty()) {
+                return false; // No corresponding open bracket
+            }
+            char top = stk.top();
+            if ((ch == ')' && top == '(') ||
+                (ch == '}' && top == '{') ||
+                (ch == ']' && top == '[')) {
+                stk.pop(); // Valid matching bracket pair
+            } else {
+                return false; // Mismatched brackets
+            }
+        }
+    }
+
+    return stk.empty(); // Stack should be empty if all brackets are valid
+}
+
+int main() {
+    string s = "{[()]}";
+    if (isValid(s)) {
+        cout << "True";
+    } else {
+        cout << "False";
+    }
+
+    return 0;
+}
